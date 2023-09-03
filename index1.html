@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .color-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .color-box {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Palette Generator</h1>
+    <p>Generate a color palette based on complementary colors:</p>
+
+    <div class="color-container" id="colorContainer">
+        <!-- Color boxes will be displayed here -->
+    </div>
+
+    <button onclick="generateComplementaryPalette()">Generate Palette</button>
+
+    <script>
+        function generateComplementaryPalette() {
+            // Clear existing colors
+            document.getElementById("colorContainer").innerHTML = "";
+
+            // Generate a random base color
+            const baseColor = getRandomColor();
+
+            // Calculate complementary color
+            const complementaryColor = calculateComplementaryColor(baseColor);
+
+            // Display base color
+            displayColor(baseColor);
+
+            // Display complementary color
+            displayColor(complementaryColor);
+        }
+
+        function getRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function calculateComplementaryColor(baseColor) {
+            // Convert the base color to RGB
+            const hex = baseColor.replace(/^#/, "");
+            const r = parseInt(hex.slice(0, 2), 16);
+            const g = parseInt(hex.slice(2, 4), 16);
+            const b = parseInt(hex.slice(4, 6), 16);
+
+            // Calculate complementary color
+            const complementaryR = 255 - r;
+            const complementaryG = 255 - g;
+            const complementaryB = 255 - b;
+
+            // Convert back to hex
+            const complementaryHex = `#${complementaryR.toString(16)}${complementaryG.toString(16)}${complementaryB.toString(16)}`;
+
+            return complementaryHex;
+        }
+
+        function displayColor(color) {
+            const colorContainer = document.getElementById("colorContainer");
+            const colorBox = document.createElement("div");
+            colorBox.className = "color-box";
+            colorBox.style.backgroundColor = color;
+            colorContainer.appendChild(colorBox);
+        }
+    </script>
+</body>
+</html>
